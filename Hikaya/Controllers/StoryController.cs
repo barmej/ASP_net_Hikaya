@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hikaya.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,10 @@ namespace Hikaya.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            return View();
+            Story story = new Story();
+            story.StoryPlots = new List<StoryPlot>();
+            story.StoryPlots.Add(new StoryPlot());
+            return View(story);
         }
     }
 }
