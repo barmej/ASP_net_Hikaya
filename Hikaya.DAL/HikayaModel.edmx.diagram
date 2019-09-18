@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c3010f9c975b4549be0650a365eab36d" Name="Diagram1">
+        <EntityTypeShape EntityType="HikayaDBModel.FeedbackMessage" Width="1.5" PointX="2.75" PointY="2.625" />
+        <EntityTypeShape EntityType="HikayaDBModel.Story" Width="1.5" PointX="0.75" PointY="3.375" />
+        <EntityTypeShape EntityType="HikayaDBModel.StoryPlot" Width="1.5" PointX="3" PointY="6.875" />
+        <AssociationConnector Association="HikayaDBModel.FK_FeedbackMessage_Story" />
+        <AssociationConnector Association="HikayaDBModel.FK_StoryPlot_Story" />
+        <EntityTypeShape EntityType="HikayaDBModel.SavedStory" Width="1.5" PointX="3" PointY="9.75" />
+        <AssociationConnector Association="HikayaDBModel.FK_SavedStory_Story" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

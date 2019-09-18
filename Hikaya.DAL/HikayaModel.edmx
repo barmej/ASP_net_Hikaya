@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HikayaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FeedbackMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="StoryId" Type="int" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="SavedStory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="StoryId" Type="int" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Story">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tags" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="PostDate" Type="datetime" />
+          <Property Name="IsPublished" Type="bit" />
+        </EntityType>
+        <EntityType Name="StoryPlot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoryId" Type="int" />
+        </EntityType>
+        <Association Name="FK_FeedbackMessage_Story">
+          <End Role="Story" Type="Self.Story" Multiplicity="0..1" />
+          <End Role="FeedbackMessage" Type="Self.FeedbackMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FeedbackMessage">
+              <PropertyRef Name="StoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SavedStory_Story">
+          <End Role="Story" Type="Self.Story" Multiplicity="0..1" />
+          <End Role="SavedStory" Type="Self.SavedStory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavedStory">
+              <PropertyRef Name="StoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPlot_Story">
+          <End Role="Story" Type="Self.Story" Multiplicity="0..1" />
+          <End Role="StoryPlot" Type="Self.StoryPlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StoryPlot">
+              <PropertyRef Name="StoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HikayaDBModelStoreContainer">
+          <EntitySet Name="FeedbackMessage" EntityType="Self.FeedbackMessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SavedStory" EntityType="Self.SavedStory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Story" EntityType="Self.Story" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoryPlot" EntityType="Self.StoryPlot" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FeedbackMessage_Story" Association="Self.FK_FeedbackMessage_Story">
+            <End Role="Story" EntitySet="Story" />
+            <End Role="FeedbackMessage" EntitySet="FeedbackMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SavedStory_Story" Association="Self.FK_SavedStory_Story">
+            <End Role="Story" EntitySet="Story" />
+            <End Role="SavedStory" EntitySet="SavedStory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPlot_Story" Association="Self.FK_StoryPlot_Story">
+            <End Role="Story" EntitySet="Story" />
+            <End Role="StoryPlot" EntitySet="StoryPlot" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HikayaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HikayaDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FeedbackMessages" EntityType="HikayaDBModel.FeedbackMessage" />
+          <EntitySet Name="Stories" EntityType="HikayaDBModel.Story" />
+          <EntitySet Name="StoryPlots" EntityType="HikayaDBModel.StoryPlot" />
+          <AssociationSet Name="FK_FeedbackMessage_Story" Association="HikayaDBModel.FK_FeedbackMessage_Story">
+            <End Role="Story" EntitySet="Stories" />
+            <End Role="FeedbackMessage" EntitySet="FeedbackMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPlot_Story" Association="HikayaDBModel.FK_StoryPlot_Story">
+            <End Role="Story" EntitySet="Stories" />
+            <End Role="StoryPlot" EntitySet="StoryPlots" />
+          </AssociationSet>
+          <EntitySet Name="SavedStories" EntityType="HikayaDBModel.SavedStory" />
+          <AssociationSet Name="FK_SavedStory_Story" Association="HikayaDBModel.FK_SavedStory_Story">
+            <End Role="Story" EntitySet="Stories" />
+            <End Role="SavedStory" EntitySet="SavedStories" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FeedbackMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="StoryId" Type="Int32" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Story" Relationship="HikayaDBModel.FK_FeedbackMessage_Story" FromRole="FeedbackMessage" ToRole="Story" />
+        </EntityType>
+        <EntityType Name="Story">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tags" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PostDate" Type="DateTime" Precision="3" />
+          <Property Name="IsPublished" Type="Boolean" />
+          <NavigationProperty Name="FeedbackMessages" Relationship="HikayaDBModel.FK_FeedbackMessage_Story" FromRole="Story" ToRole="FeedbackMessage" />
+          <NavigationProperty Name="StoryPlots" Relationship="HikayaDBModel.FK_StoryPlot_Story" FromRole="Story" ToRole="StoryPlot" />
+          <NavigationProperty Name="SavedStories" Relationship="HikayaDBModel.FK_SavedStory_Story" FromRole="Story" ToRole="SavedStory" />
+        </EntityType>
+        <EntityType Name="StoryPlot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoryId" Type="Int32" />
+          <NavigationProperty Name="Story" Relationship="HikayaDBModel.FK_StoryPlot_Story" FromRole="StoryPlot" ToRole="Story" />
+        </EntityType>
+        <Association Name="FK_FeedbackMessage_Story">
+          <End Type="HikayaDBModel.Story" Role="Story" Multiplicity="0..1" />
+          <End Type="HikayaDBModel.FeedbackMessage" Role="FeedbackMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FeedbackMessage">
+              <PropertyRef Name="StoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPlot_Story">
+          <End Type="HikayaDBModel.Story" Role="Story" Multiplicity="0..1" />
+          <End Type="HikayaDBModel.StoryPlot" Role="StoryPlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StoryPlot">
+              <PropertyRef Name="StoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SavedStory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StoryId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Story" Relationship="HikayaDBModel.FK_SavedStory_Story" FromRole="SavedStory" ToRole="Story" />
+        </EntityType>
+        <Association Name="FK_SavedStory_Story">
+          <End Type="HikayaDBModel.Story" Role="Story" Multiplicity="0..1" />
+          <End Type="HikayaDBModel.SavedStory" Role="SavedStory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavedStory">
+              <PropertyRef Name="StoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HikayaDBModelStoreContainer" CdmEntityContainer="HikayaDBEntities">
+          <EntitySetMapping Name="FeedbackMessages">
+            <EntityTypeMapping TypeName="HikayaDBModel.FeedbackMessage">
+              <MappingFragment StoreEntitySet="FeedbackMessage">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="StoryId" ColumnName="StoryId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stories">
+            <EntityTypeMapping TypeName="HikayaDBModel.Story">
+              <MappingFragment StoreEntitySet="Story">
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoryPlots">
+            <EntityTypeMapping TypeName="HikayaDBModel.StoryPlot">
+              <MappingFragment StoreEntitySet="StoryPlot">
+                <ScalarProperty Name="StoryId" ColumnName="StoryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SavedStories">
+            <EntityTypeMapping TypeName="HikayaDBModel.SavedStory">
+              <MappingFragment StoreEntitySet="SavedStory">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="StoryId" ColumnName="StoryId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

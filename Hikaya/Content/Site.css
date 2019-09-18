@@ -1,0 +1,140 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Tajawal');
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    direction: rtl;
+    font-family: 'Tajawal', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Tajawal', sans-serif;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 125px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.story-plot-item img {
+    padding: 16px;
+}
+
+.story-plot-item p {
+    margin-top: 16px;
+    font-size: 18px;
+}
+
+.story-plot-item:nth-child(2n) .col-md-3 {
+    float: left;
+}
+
+.story-plot-item {
+    padding: 16px;
+}
+
+.message-item {
+    background: #FAFAFA;
+    padding: 15px 30px;
+    margin: 5px;
+}
+
+.message-date {
+    float: left;
+}
+
+.message-sender {
+    font-weight: bold;
+}
+
+#input-group-search {
+    padding: 3px;
+    border: solid 1px #49D8ED;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+    #input-group-search input {
+        border: 0;
+        box-shadow: none;
+    }
+
+    #input-group-search button {
+        margin: 2px 0 0 0;
+        background: none;
+        box-shadow: none;
+        border: 0;
+        color: #666666;
+        padding: 0 8px 0 10px;
+        border-right: solid 1px #49D8ED;
+    }
+
+        #input-group-search button:hover {
+            border: 0;
+            box-shadow: none;
+            border-right: solid 1px #49D8ED;
+        }
+
+    #input-group-search .glyphicon-search {
+        font-size: 23px;
+    }
+
+.glyphicon {
+    color: #49D8ED;
+}
+
+.logo {
+    width: 100px;
+}
+
+.navbar-form {
+    margin-top: 30px;
+}
+
+.btn-primary {
+    background-color: #49D8ED;
+    border-color: #49D8ED;
+}
+
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
+        background-color: #49D8EA;
+        border-color: #49D8EA;
+    }
+
+.navbar-inverse {
+    background-color: #FAFAFA;
+    border-color: #49D8ED;
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #49D8ED;
+    }
+
+        .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+            color: #1CB2C8;
+        }
+
+.jumbotron {
+    background-color: #FAFAFA;
+}
+
+.story-list-item {
+    padding: 15px;
+    border: 1px solid #49D8ED;
+    margin: 5px;
+}
