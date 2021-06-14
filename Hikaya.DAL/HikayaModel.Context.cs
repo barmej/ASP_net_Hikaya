@@ -26,8 +26,8 @@ namespace Hikaya.DAL
         }
     
         public virtual DbSet<FeedbackMessage> FeedbackMessages { get; set; }
-        public virtual DbSet<SavedStory> SavedStories { get; set; }
         public virtual DbSet<Story> Stories { get; set; }
+        public virtual DbSet<SavedStory> SavedStories { get; set; }
         public virtual DbSet<StoryPlot> StoryPlots { get; set; }
     }
 }

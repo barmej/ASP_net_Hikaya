@@ -28,7 +28,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" />
           <Property Name="Tags" Type="nvarchar" MaxLength="50" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
@@ -41,6 +41,9 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StoryId" Type="int" />
+          <Property Name="Text" Type="nvarchar" MaxLength="128" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="128" />
+          <Property Name="Sort" Type="int" />
         </EntityType>
         <Association Name="FK_FeedbackMessage_Story">
           <End Role="Story" Type="Self.Story" Multiplicity="0..1" />
@@ -103,19 +106,19 @@
         <EntityContainer Name="HikayaDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="FeedbackMessages" EntityType="HikayaDBModel.FeedbackMessage" />
           <EntitySet Name="Stories" EntityType="HikayaDBModel.Story" />
-          <EntitySet Name="StoryPlots" EntityType="HikayaDBModel.StoryPlot" />
           <AssociationSet Name="FK_FeedbackMessage_Story" Association="HikayaDBModel.FK_FeedbackMessage_Story">
             <End Role="Story" EntitySet="Stories" />
             <End Role="FeedbackMessage" EntitySet="FeedbackMessages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StoryPlot_Story" Association="HikayaDBModel.FK_StoryPlot_Story">
-            <End Role="Story" EntitySet="Stories" />
-            <End Role="StoryPlot" EntitySet="StoryPlots" />
           </AssociationSet>
           <EntitySet Name="SavedStories" EntityType="HikayaDBModel.SavedStory" />
           <AssociationSet Name="FK_SavedStory_Story" Association="HikayaDBModel.FK_SavedStory_Story">
             <End Role="Story" EntitySet="Stories" />
             <End Role="SavedStory" EntitySet="SavedStories" />
+          </AssociationSet>
+          <EntitySet Name="StoryPlots" EntityType="HikayaDBModel.StoryPlot" />
+          <AssociationSet Name="FK_StoryPlot_Story" Association="HikayaDBModel.FK_StoryPlot_Story">
+            <End Role="Story" EntitySet="Stories" />
+            <End Role="StoryPlot" EntitySet="StoryPlots" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="FeedbackMessage">
@@ -140,16 +143,8 @@
           <Property Name="PostDate" Type="DateTime" Precision="3" />
           <Property Name="IsPublished" Type="Boolean" />
           <NavigationProperty Name="FeedbackMessages" Relationship="HikayaDBModel.FK_FeedbackMessage_Story" FromRole="Story" ToRole="FeedbackMessage" />
-          <NavigationProperty Name="StoryPlots" Relationship="HikayaDBModel.FK_StoryPlot_Story" FromRole="Story" ToRole="StoryPlot" />
           <NavigationProperty Name="SavedStories" Relationship="HikayaDBModel.FK_SavedStory_Story" FromRole="Story" ToRole="SavedStory" />
-        </EntityType>
-        <EntityType Name="StoryPlot">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StoryId" Type="Int32" />
-          <NavigationProperty Name="Story" Relationship="HikayaDBModel.FK_StoryPlot_Story" FromRole="StoryPlot" ToRole="Story" />
+          <NavigationProperty Name="StoryPlots" Relationship="HikayaDBModel.FK_StoryPlot_Story" FromRole="Story" ToRole="StoryPlot" />
         </EntityType>
         <Association Name="FK_FeedbackMessage_Story">
           <End Type="HikayaDBModel.Story" Role="Story" Multiplicity="0..1" />
@@ -159,18 +154,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="FeedbackMessage">
-              <PropertyRef Name="StoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_StoryPlot_Story">
-          <End Type="HikayaDBModel.Story" Role="Story" Multiplicity="0..1" />
-          <End Type="HikayaDBModel.StoryPlot" Role="StoryPlot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Story">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StoryPlot">
               <PropertyRef Name="StoryId" />
             </Dependent>
           </ReferentialConstraint>
@@ -193,6 +176,29 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SavedStory">
+              <PropertyRef Name="StoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StoryPlot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoryId" Type="Int32" />
+          <Property Name="Text" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ImageUrl" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <NavigationProperty Name="Story" Relationship="HikayaDBModel.FK_StoryPlot_Story" FromRole="StoryPlot" ToRole="Story" />
+        </EntityType>
+        <Association Name="FK_StoryPlot_Story">
+          <End Type="HikayaDBModel.Story" Role="Story" Multiplicity="0..1" />
+          <End Type="HikayaDBModel.StoryPlot" Role="StoryPlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StoryPlot">
               <PropertyRef Name="StoryId" />
             </Dependent>
           </ReferentialConstraint>
@@ -226,20 +232,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StoryPlots">
-            <EntityTypeMapping TypeName="HikayaDBModel.StoryPlot">
-              <MappingFragment StoreEntitySet="StoryPlot">
-                <ScalarProperty Name="StoryId" ColumnName="StoryId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SavedStories">
             <EntityTypeMapping TypeName="HikayaDBModel.SavedStory">
               <MappingFragment StoreEntitySet="SavedStory">
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="StoryId" ColumnName="StoryId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoryPlots">
+            <EntityTypeMapping TypeName="HikayaDBModel.StoryPlot">
+              <MappingFragment StoreEntitySet="StoryPlot">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="StoryId" ColumnName="StoryId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

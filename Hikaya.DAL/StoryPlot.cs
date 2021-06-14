@@ -16,6 +16,9 @@ namespace Hikaya.DAL
     {
         public int Id { get; set; }
         public Nullable<int> StoryId { get; set; }
+        public string Text { get; set; }
+        public string ImageUrl { get; set; }
+        public Nullable<int> Sort { get; set; }
     
         public virtual Story Story { get; set; }
     }

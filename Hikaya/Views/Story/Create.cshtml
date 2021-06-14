@@ -50,6 +50,7 @@
             StoryPlot storyPlot = Model.StoryPlots.ElementAt(0);
             
                 <div class="story-plot-item">
+                    
                     <!--Story Plot Text-->
                     <div class="form-group">
                         @Html.Label(StoryResources.Text, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -57,6 +58,7 @@
                             @Html.TextArea("StoryPlots[0].Text", "", new { @class = "form-control col-md-10 story-plot-text" })
                         </div>
                     </div>
+
                     <!--Story Plot Image-->
                     <div class="form-group">
                         @Html.Label(StoryResources.Image, htmlAttributes: new { @class = "control-label col-md-2" })
